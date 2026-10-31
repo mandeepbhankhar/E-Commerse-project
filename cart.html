@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart - ShopSphere</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .cart-container { padding: 40px 5%; }
+        .cart-item {
+            display: flex; align-items: center; gap: 20px;
+            background: white; padding: 18px; margin: 15px 0;
+            border-radius: 10px;
+        }
+        .cart-item img { width: 100px; height: 90px; object-fit: cover; border-radius: 8px; }
+        .remove { color: #d33; text-decoration: none; }
+        .total { font-size: 23px; margin: 25px 0; }
+    </style>
+</head>
+<body>
+<header class="header">
+    <a class="logo" href="/">Shop<span>Sphere</span></a>
+    <nav><a href="/">Continue Shopping</a></nav>
+</header>
+
+<div class="cart-container">
+    <h1>My Shopping Cart 🛒</h1>
+
+    {% if cart_items %}
+        {% for item in cart_items %}
+        <div class="cart-item">
+            <img src="{{ item.image }}" alt="{{ item.name }}">
+            <div>
+                <h3>{{ item.name }}</h3>
+                <p>Price: ₹{{ item.price }}</p>
+                <p>Quantity: {{ item.quantity }}</p>
+                <p>Subtotal: ₹{{ item.subtotal }}</p>
+                <a class="remove" href="/remove/{{ item.id }}">Remove</a>
+            </div>
+        </div>
+        {% endfor %}
+
+        <h2 class="total">Total: ₹{{ total }}</h2>
+        <button class="hero-btn" onclick="alert('Checkout will be added in the next development stage!')">
+            Proceed to Checkout
+        </button>
+    {% else %}
+        <h2>Your cart is empty!</h2>
+        <a class="hero-btn" href="/">Start Shopping</a>
+    {% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopSphere - Shop Smart. Live Better.</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="topbar">
+    ✨ Free Shipping on Orders Above ₹999
+    &nbsp; | &nbsp; Easy Returns
+    &nbsp; | &nbsp; Cash on Delivery Available
+</div>
+
+<header>
+    <a href="/" class="logo">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span>Shop<span class="purple">Sphere</span>
+        <small>Shop Smart. Live Better.</small></span>
+    </a>
+
+    <form action="/" method="GET" class="search">
+        <input type="text" name="search" placeholder="Search for products..." value="{{ search }}">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+
+   <nav>
+    <a href="/">Home</a>
+    <a href="#products">Shop</a>
+    <a href="/cart">Cart 🛒 ({{ cart_count }})</a>
+
+    {% if current_user.is_authenticated %}
+        <a href="/logout">Logout</a>
+    {% else %}
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    {% endif %}
+</nav>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <p class="sale-label">BIG FASHION SALE</p>
+        <h1>Up to <span>70% OFF</span></h1>
+        <p>Shop the latest trends at unbeatable prices!</p>
+        <a href="#products" class="shop-btn">Shop Now <i class="fa fa-arrow-right"></i></a>
+    </div>
+    <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900" alt="Fashion shopping">
+    </div>
+    <div class="benefits">
+        <div><i class="fa fa-truck"></i><span><b>Free Shipping</b><br>On Orders ₹999+</span></div>
+        <div><i class="fa fa-shield-halved"></i><span><b>Secure Payments</b><br>Safe Shopping</span></div>
+        <div><i class="fa fa-rotate-left"></i><span><b>Easy Returns</b><br>Within 7 Days</span></div>
+    </div>
+</section>
+
+<section class="categories" id="categories">
+    <a href="/?category=Fashion" class="category">
+        <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=200" alt="Fashion">
+        <b>Fashion</b>
+    </a>
+    <a href="/?category=Electronics" class="category">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200" alt="Electronics">
+        <b>Electronics</b>
+    </a>
+    <a href="/?category=Beauty" class="category">
+        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=200" alt="Beauty">
+        <b>Beauty</b>
+    </a>
+    <a href="/?category=Shoes" class="category">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200" alt="Shoes">
+        <b>Shoes</b>
+    </a>
+    <a href="/?category=Accessories" class="category">
+        <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=200" alt="Accessories">
+        <b>Accessories</b>
+    </a>
+</section>
+
+<section class="products-section" id="products">
+    <div class="section-heading">
+        <h2>Featured Products</h2>
+        <a href="/">View All Products <i class="fa fa-arrow-right"></i></a>
+    </div>
+
+    <div class="product-grid">
+        {% for p in products %}
+        <div class="product-card">
+            <div class="product-image">
+                <img src="{{ p.image }}" alt="{{ p.name }}">
+                <span class="discount">{{ p.discount }}% OFF</span>
+            </div>
+            <div class="product-info">
+                <div class="rating">⭐ {{ p.rating }} <small>(Customer rating)</small></div>
+                <h3>{{ p.name }}</h3>
+                <p class="price">₹{{ "{:,}".format(p.price) }}
+                    <del>₹{{ "{:,}".format(p.old_price) }}</del>
+                </p>
+                <a href="{{ url_for('add_to_cart', product_id=p.id) }}" class="add-btn">
+                    <i class="fa fa-shopping-cart"></i> Add to Cart
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <p>No products found. Try another search.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="about" id="about">
+    <h2>Welcome to ShopSphere</h2>
+    <p>Your favourite destination for fashion, electronics, beauty and everyday essentials.</p>
+</section>
+
+<footer id="contact">
+    <div>
+        <h2><i class="fa-solid fa-bag-shopping"></i> ShopSphere</h2>
+        <p>Shop Smart. Live Better.</p>
+    </div>
+    <div>
+        <h3>Quick Links</h3>
+        <a href="/">Home</a>
+        <a href="#categories">Shop</a>
+        <a href="#about">About</a>
+    </div>
+    <div>
+        <h3>Customer Service</h3>
+        <p>FAQs</p>
+        <p>Shipping Policy</p>
+        <p>Return Policy</p>
+    </div>
+    <div>
+        <h3>Follow Us</h3>
+        <p><i class="fab fa-instagram"></i> Instagram</p>
+        <p><i class="fab fa-facebook"></i> Facebook</p>
+    </div>
+    <div class="copyright">
+        © 2026 ShopSphere. All Rights Reserved.
+    </div>
+</footer>
+
+</body>
+</html>
